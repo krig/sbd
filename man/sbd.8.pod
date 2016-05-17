@@ -171,7 +171,7 @@ Dump meta-data header from device.
 
 Example usage:
 
-	sbd -d /dev/sdc2 -d /dev/sdd3 -W -P watch
+	sbd -d /dev/sdc2 -d /dev/sdd3 -P watch
 
 This command will make C<sbd> start in daemon mode. It will constantly monitor
 the message slot of the local node for incoming messages, reachability, and
@@ -229,18 +229,15 @@ that handles the Pacemaker integration.
 
 =over
 
-=item B<-W>
-
-Enable or disable use of the system watchdog to protect against the sbd
-processes failing and the node being left in an undefined state. Specify
-this once to enable, twice to disable.
-
-Defaults to I<enabled>.
-
 =item B<-w> F</dev/watchdog>
+
+The system watchdog is used by sbd to protect against the sbd
+processes failing and the node being left in an undefined state.
 
 This can be used to override the default watchdog device used and should not
 usually be necessary.
+
+Passing /dev/null as the argument disables use of the system watchdog.
 
 =item B<-p> F</var/run/sbd.pid>
 
