@@ -798,7 +798,6 @@ int main(int argc, char **argv, char **envp)
 {
 	int exit_status = 0;
 	int c;
-	int w = 0;
         int qb_facility;
         const char *value = NULL;
         int start_delay = 0;
@@ -877,7 +876,7 @@ int main(int argc, char **argv, char **envp)
         }
         cl_log(LOG_DEBUG, "Start delay: %d (%s)", (int)start_delay, value?value:"default");
 
-	while ((c = getopt(argc, argv, "czC:DPRTWZhvw:d:n:p:1:2:3:4:5:t:I:F:S:s:")) != -1) {
+	while ((c = getopt(argc, argv, "czC:DPRTZhvw:d:n:p:1:2:3:4:5:t:I:F:S:s:")) != -1) {
 		switch (c) {
 		case 'D':
 			break;
@@ -914,9 +913,6 @@ int main(int argc, char **argv, char **envp)
 		case 'T':
 			watchdog_set_timeout = 0;
 			cl_log(LOG_INFO, "Setting watchdog timeout disabled; using defaults.");
-			break;
-		case 'W':
-			w++;
 			break;
 		case 'w':
                         cl_log(LOG_NOTICE, "Using watchdog device '%s'", watchdogdev);
@@ -999,10 +995,7 @@ int main(int argc, char **argv, char **envp)
 		}
 	}
 
-	if (w > 0) {
-            watchdog_use = w % 2;
-
-	} else if(watchdogdev == NULL || strcmp(watchdogdev, "/dev/null") == 0) {
+	if (watchdogdev == NULL || strcmp(watchdogdev, "/dev/null") == 0) {
             watchdog_use = 0;
         }
 
